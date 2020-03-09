@@ -57,6 +57,11 @@ export default {
         height: 100%;
         font-family: 'Montserrat', sans-serif;
         font-size: 16px;
+        
+    }
+
+    html {
+        overflow: hidden!important;
     }
 
     input {

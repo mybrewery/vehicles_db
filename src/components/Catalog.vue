@@ -273,18 +273,18 @@ export default {
                         max_page: 1,
                         filters: {
                                 year: [1990, 2020],
-                                mileage: [0, 200000],
-                                engine_capacity: [0, 5],
-                                price: [0, 2000000],
+                                mileage: [0, 500000],
+                                engine_capacity: [0, 10],
+                                price: [0, 20000000],
                                 vendor: null,
                                 model_name: null,
                                 gearbox_type: null,
                         },
                         models: {
                                 year: [1990, 2020],
-                                mileage: [0, 200000],
-                                engine_capacity: [0, 5],
-                                price: [0, 2000000],
+                                mileage: [0, 500000],
+                                engine_capacity: [0, 10],
+                                price: [0, 20000000],
                                 vendors: [],
                                 gearboxes: [],
                                 car_models: []
@@ -389,6 +389,13 @@ export default {
 				width: calc(100% - 24px)!important;
 			}
 
+                        * {
+                                font-size: 14px;
+                        }
+
+                        input {
+                                font-size: 14px;        
+                        }
 
 			.catalog .content_wrapper .filters_wrapper {
 				width: 90%!important;
@@ -418,6 +425,38 @@ export default {
                                         box-shadow: -18px 17px 76px -24px black;
                                 }
 			}
+
+                        .vehicles_db .footer.flex-row {
+                                align-items: center!important;
+
+                                span:first-child {
+                                        display: none;
+                                }
+                        }
+
+                        .catalog_item {
+                                font-size: 14px!important;
+                                margin: 6px 12px!important;
+                        }
+
+                        .catalog_item .image_wrapper {
+                                width: 48px;
+                                height: 48px;
+                        }
+
+                        .catalog .header {
+                                height: 48px;
+
+                                > div:first-child {
+                                        font-size: 8px;
+                                        display: none;
+                                }
+                        }
+                        
+                        .catalog .content_wrapper .items_list_wrapper {
+                                padding: 0!important;
+
+                        }
 		}
 
     .catalog {
