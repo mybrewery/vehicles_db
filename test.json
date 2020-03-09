@@ -1,0 +1,7 @@
+{
+    "NODE_ENV": "development",
+    "PACKAGE_TYPE": "thin",
+    "ENTRY_POINT": "main_thin",
+    "OUTPUT_PATH": "dist_thin",
+    "SOURCE_MAP": true
+}

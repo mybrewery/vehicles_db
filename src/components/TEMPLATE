@@ -1,0 +1,43 @@
+<template>
+    <div class="some_component">
+            
+    </div>
+</template>
+
+<script>
+
+import { mapState } from 'vuex'
+
+export default {
+        mixins: [],
+        name: "SomeComponent",
+        components: {},
+        log_color: "#ffeb3b",
+	props: {
+                
+        },
+        watch: {},
+        data: function () {
+                return {
+                        
+                }
+        },
+        mounted () {
+               
+        },
+        computed: {
+                
+        },
+        methods: {
+                
+        }
+
+}
+   
+</script>
+
+<style lang="scss">
+    .some_component {
+        
+    }
+</style>

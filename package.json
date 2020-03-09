@@ -1,0 +1,49 @@
+{
+        "scripts": {
+                "rip": "node --inspect ripper.js",
+                "start": "cross-env NODE_ENV=development webpack-dev-server"
+        },
+        "devDependencies": {
+                "@babel/core": "latest",
+                "@babel/plugin-proposal-class-properties": "latest",
+                "@babel/plugin-proposal-decorators": "latest",
+                "@babel/plugin-syntax-dynamic-import": "latest",
+                "@babel/preset-env": "latest",
+                "@babel/register": "latest",
+                "babel-loader": "8.0.4",
+                "babel-plugin-transform-private-properties": "latest",
+                "babel-polyfill": "latest",
+                "babel-preset-es2015": "latest",
+                "canvas": "^2.6.1",
+                "copy-webpack-plugin": "^5.1.1",
+                "css-loader": "^3.4.2",
+                "html-webpack-plugin": "^3.2.0",
+                "iconv-lite": "^0.5.1",
+                "jsdom": "^16.2.0",
+                "jsonfile": "^6.0.1",
+                "lodash-es": "^4.17.15",
+                "node-sass": "^4.13.1",
+                "randomstring": "^1.1.5",
+                "request": "^2.88.2",
+                "rimraf": "^3.0.2",
+                "sass-loader": "^8.0.2",
+                "style-loader": "latest",
+                "sync-request": "^6.1.0",
+                "terser": "^4.6.4",
+                "terser-webpack-plugin": "latest",
+                "text-loader": "latest",
+                "url-loader": "latest",
+                "vue": "latest",
+                "vue-loader": "15.4.2",
+                "vue-style-loader": "latest",
+                "vue-template-compiler": "latest",
+                "vuex": "^3.1.2",
+                "vuex-persistedstate": "^2.7.1",
+                "webpack": "latest",
+                "webpack-dev-server": "^3.10.3",
+                "windows-1251": "^1.0.0"
+        },
+        "dependencies": {
+                "webpack-cli": "^3.3.11"
+        }
+}
