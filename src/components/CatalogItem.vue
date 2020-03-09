@@ -20,7 +20,7 @@
                             </div>
                             <div class="info_plate flex-row">
                                     <i class="material-icons">usb</i>
-                                    <div class="info_content" v-html="`${item_data.gearbox_type} л.`"></div>
+                                    <div class="info_content" v-html="`${item_data.gearbox_type}`"></div>
                             </div>
                             <div class="info_plate flex-row">
                                     <i class="material-icons">slow_motion_video</i>

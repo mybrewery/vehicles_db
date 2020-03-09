@@ -60,6 +60,7 @@
                                                 :max="filters.year[1]"
                                                 :min="filters.year[0]"
                                                 hide-details
+                                                thumb-label="always"
                                                 class="align-center"
                                         >
                                         <template v-slot:prepend>
@@ -98,6 +99,7 @@
                                                 :max="filters.mileage[1]"
                                                 :min="filters.mileage[0]"
                                                 hide-details
+                                                thumb-label="always"
                                                 class="align-center"
                                         >
                                         <template v-slot:prepend>
@@ -137,6 +139,7 @@
                                                 :min="filters.engine_capacity[0]"
                                                 :step="0.1"
                                                 hide-details
+                                                thumb-label="always"
                                                 class="align-center"
                                         >
                                         <template v-slot:prepend>
@@ -176,6 +179,7 @@
                                                 :min="filters.price[0]"
                                                 :step="0.1"
                                                 hide-details
+                                                thumb-label="always"
                                                 class="align-center"
                                         >
                                         <template v-slot:prepend>
@@ -209,7 +213,13 @@
                                 
                         </div>
                 </div>
-                <div v-bind:class="{ active: active_context === `items` }" class="items_list_wrapper" @click="active_context=`items`">
+                <div 
+                        v-bind:class="{ active: active_context === `items` }" 
+                        v-bind:style="{ overflowY: is_loading ? `hidden`: `auto` }"
+                        class="items_list_wrapper" 
+                        ref="items_list_wrapper"
+                        @click="active_context=`items`"
+                >
                         <div class="items_list_wrapper_content_wrapper">
                                 <div class="list_wrapper">
                                         <CatalogItem
@@ -230,6 +240,9 @@
                                         </div>
                                 </div>
                         </div>
+                        <div v-if="is_loading" class="loading_wrapper" >
+                                <div class="loader">Завантаження</div>
+                        </div>
                 </div>
         </div> 
     </div>
@@ -240,7 +253,7 @@
 import { mapState } from 'vuex'
 import CatalogItem from "./CatalogItem.vue"
 import RangeSelect from "./RangeSelect.vue"
-import throttle from "lodash-es/throttle"
+import debounce from "lodash-es/debounce"
 import values from "lodash-es/values"
 import keys from "lodash-es/keys"
 import forEach from "lodash-es/forEach"
@@ -256,16 +269,18 @@ export default {
                 
         },
         watch: {
-                "models.year" (v) { this.update_filtered_throttled(); },
-                "models.mileage" (v) { this.update_filtered_throttled(); },
-                "models.engine_capacity" (v) { this.update_filtered_throttled(); },
-                "models.price" (v) { this.update_filtered_throttled(); },
-                "models.vendors" (v) { this.update_filtered_throttled(); this.models.car_models = [] },
-                "models.car_models" (v) { this.update_filtered_throttled(); },
-                "models.gearboxes" (v) { this.update_filtered_throttled(); },
+                "is_loading" ( v ) { this.$refs.items_list_wrapper.scrollTop = 0 },  
+                "models.year" (v) { this.is_loading = true; this.update_filtered_debounced(); },
+                "models.mileage" (v) { this.is_loading = true; this.update_filtered_debounced(); },
+                "models.engine_capacity" (v) { this.is_loading = true; this.update_filtered_debounced(); },
+                "models.price" (v) { this.is_loading = true; this.update_filtered_debounced(); },
+                "models.vendors" (v) { this.is_loading = true; this.update_filtered_debounced();  this.models.car_models = [] },
+                "models.car_models" (v) { this.is_loading = true; this.update_filtered_debounced(); },
+                "models.gearboxes" (v) { this.is_loading = true; this.update_filtered_debounced(); },
         },
         data: function () {
                 return {
+                        is_loading: true,
                         active_context: "items",
                         filtered_items: [],
                         current_page: 0,
@@ -274,8 +289,8 @@ export default {
                         filters: {
                                 year: [1990, 2020],
                                 mileage: [0, 500000],
-                                engine_capacity: [0, 10],
-                                price: [0, 20000000],
+                                engine_capacity: [0, 8],
+                                price: [0, 3000000],
                                 vendor: null,
                                 model_name: null,
                                 gearbox_type: null,
@@ -283,8 +298,8 @@ export default {
                         models: {
                                 year: [1990, 2020],
                                 mileage: [0, 500000],
-                                engine_capacity: [0, 10],
-                                price: [0, 20000000],
+                                engine_capacity: [0, 8],
+                                price: [0, 3000000],
                                 vendors: [],
                                 gearboxes: [],
                                 car_models: []
@@ -293,10 +308,10 @@ export default {
         },
         mounted () {
         //        this.update_filtered()
-               this.update_filtered_throttled = throttle(()=>{
+               this.update_filtered_debounced = debounce(()=>{
                        console.log("update...");
                        this.update_filtered()
-               }, 100)
+               }, 333)
 
                window.catalog = this
 
@@ -350,17 +365,21 @@ export default {
 
                         this.max_page= Math.floor( filtered.length / this.items_per_page )
                         this.filtered_items = filtered.slice( this.current_page * this.items_per_page, ( this.current_page * this.items_per_page ) + this.items_per_page )
+
+                        this.is_loading = false
               },
               on_next_button_click () {
                       if ( this.current_page < this.max_page ) {
                               this.current_page++
-                              this.update_filtered_throttled()
+                              this.is_loading = true
+                              this.update_filtered_debounced()
                       }
               },
               on_prev_button_click () {
                       if ( this.current_page > 0 ) {
                               this.current_page--
-                              this.update_filtered_throttled()
+                              this.is_loading = true
+                              this.update_filtered_debounced()
                       }
               }
         }
@@ -370,6 +389,69 @@ export default {
 </script>
 
 <style lang="scss">
+        .loader {
+        font-size: 10px;
+        margin: 50px auto;
+        text-indent: -9999em;
+        width: 11em;
+        height: 11em;
+        border-radius: 50%;
+        background: #ffffff;
+        background: -moz-linear-gradient(left, #ffffff 10%, rgba(255, 255, 255, 0) 42%);
+        background: -webkit-linear-gradient(left, #ffffff 10%, rgba(255, 255, 255, 0) 42%);
+        background: -o-linear-gradient(left, #ffffff 10%, rgba(255, 255, 255, 0) 42%);
+        background: -ms-linear-gradient(left, #ffffff 10%, rgba(255, 255, 255, 0) 42%);
+        background: linear-gradient(to right, #ffffff 10%, rgba(255, 255, 255, 0) 42%);
+        position: relative;
+        -webkit-animation: load3 1.4s infinite linear;
+        animation: load3 1.4s infinite linear;
+        -webkit-transform: translateZ(0);
+        -ms-transform: translateZ(0);
+        transform: translateZ(0);
+        }
+        .loader:before {
+        width: 50%;
+        height: 50%;
+        background: #000000;
+        border-radius: 100% 0 0 0;
+        position: absolute;
+        top: 0;
+        left: 0;
+        content: '';
+        }
+        .loader:after {
+        background: #fcfcfc;
+        width: 75%;
+        height: 75%;
+        border-radius: 50%;
+        content: '';
+        margin: auto;
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        }
+        @-webkit-keyframes load3 {
+        0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+        }
+        100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+        }
+        }
+        @keyframes load3 {
+        0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+        }
+        100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+        }
+        }
         @media only screen and (max-width: 1600px) {
 			.catalog .content_wrapper .items_list_wrapper .list_wrapper .catalog_item {
 				width: calc(50% - 24px)!important;
@@ -420,11 +502,15 @@ export default {
                                 box-shadow: -18px 17px 0 -24px transparent;
 
                                 &.active {
-                                        transform: translateX(10%);
+                                        transform: translateX(11.1%);
                                         z-index: 1;
                                         box-shadow: -18px 17px 76px -24px black;
                                 }
+
+                               
 			}
+
+                        
 
                         .vehicles_db .footer.flex-row {
                                 align-items: center!important;
@@ -459,6 +545,16 @@ export default {
                         }
 		}
 
+    .v-list-item__content {
+                text-transform: uppercase;
+        }
+
+        .v-slider--horizontal .v-slider__thumb-label> * {
+                background: #1976d2;
+                padding: 4px;
+                border-radius: 6px;
+        }
+    
     .catalog {
         overflow: hidden;
         width: 100%;
@@ -516,6 +612,8 @@ export default {
                                         width: 100%;
                                 }
                         }
+
+                        
                 }
 
                 .items_list_wrapper {
@@ -525,6 +623,21 @@ export default {
                         border-radius: 0;
                         padding: 24px;
                         min-height: 100%;
+                        position: relative;
+
+                         .loading_wrapper {
+                                        z-index: 2;
+                                position: absolute;
+                                top: 0;
+                                left: 0;
+                                width: 100%;
+                                height: 100%;
+                                background: #ffffffd1;
+                                display: flex;
+                                align-items: center;
+                                justify-self: center;
+
+                        }
                         
                         .items_list_wrapper_content_wrapper {
                                 min-height: 100%;
