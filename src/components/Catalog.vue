@@ -234,7 +234,7 @@
                                                 <i class="material-icons" >navigate_before</i>
                                                 <div class="cap">Попередня сторiнка</div>
                                         </div>
-                                        <div class="button next_page"  @click="on_next_button_click" v-if="current_page < this.max_page">
+                                        <div class="button next_page"  @click="on_next_button_click" v-if="current_page < max_page && max_page > 0">
                                                 <div class="cap">Наступна сторiнка</div>
                                                 <i class="material-icons">navigate_next</i>
                                         </div>
@@ -270,13 +270,13 @@ export default {
         },
         watch: {
                 "is_loading" ( v ) { this.$refs.items_list_wrapper.scrollTop = 0 },  
-                "models.year" (v) { this.is_loading = true; this.update_filtered_debounced(); },
-                "models.mileage" (v) { this.is_loading = true; this.update_filtered_debounced(); },
-                "models.engine_capacity" (v) { this.is_loading = true; this.update_filtered_debounced(); },
-                "models.price" (v) { this.is_loading = true; this.update_filtered_debounced(); },
-                "models.vendors" (v) { this.is_loading = true; this.update_filtered_debounced();  this.models.car_models = [] },
-                "models.car_models" (v) { this.is_loading = true; this.update_filtered_debounced(); },
-                "models.gearboxes" (v) { this.is_loading = true; this.update_filtered_debounced(); },
+                "models.year" (v) { this.is_loading = true; this.current_page = 0; this.update_filtered_debounced(); },
+                "models.mileage" (v) { this.is_loading = true; this.current_page = 0; this.update_filtered_debounced(); },
+                "models.engine_capacity" (v) { this.is_loading = true; this.current_page = 0; this.update_filtered_debounced(); },
+                "models.price" (v) { this.is_loading = true; this.current_page = 0; this.update_filtered_debounced(); },
+                "models.vendors" (v) { this.is_loading = true; this.current_page = 0; this.update_filtered_debounced();  this.models.car_models = [] },
+                "models.car_models" (v) { this.is_loading = true; this.current_page = 0; this.update_filtered_debounced(); },
+                "models.gearboxes" (v) { this.is_loading = true; this.current_page = 0; this.update_filtered_debounced(); },
         },
         data: function () {
                 return {

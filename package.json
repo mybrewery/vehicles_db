@@ -1,7 +1,7 @@
 {
     "name": "VehiclesDB",
     "author": "Natalia Panasenko <xpersephonko@gmail.com>",
-    "version": "1.0.11-rc",
+    "version": "1.0.16-rc",
     "scripts": {
         "rip": "node --inspect ripper.js",
         "start": "cross-env NODE_ENV=development webpack-dev-server",
