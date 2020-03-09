@@ -10,7 +10,7 @@
                 </div>
         </div>
         <div class="content_wrapper">
-                <div class="filters_wrapper">
+                <div v-bind:class="{ active: active_context === `filters` }" class="filters_wrapper" @click="active_context=`filters`">
                         <div class="filter_item_wrapper">
                                 <v-card-text>
                                         <v-row>
@@ -209,7 +209,7 @@
                                 
                         </div>
                 </div>
-                <div class="items_list_wrapper">
+                <div v-bind:class="{ active: active_context === `items` }" class="items_list_wrapper" @click="active_context=`items`">
                         <div class="items_list_wrapper_content_wrapper">
                                 <div class="list_wrapper">
                                         <CatalogItem
@@ -266,6 +266,7 @@ export default {
         },
         data: function () {
                 return {
+                        active_context: "items",
                         filtered_items: [],
                         current_page: 0,
                         items_per_page: 21,
@@ -369,6 +370,56 @@ export default {
 </script>
 
 <style lang="scss">
+        @media only screen and (max-width: 1600px) {
+			.catalog .content_wrapper .items_list_wrapper .list_wrapper .catalog_item {
+				width: calc(50% - 24px)!important;
+			}
+			
+			.catalog .content_wrapper .filters_wrapper {
+				width: 25%!important;
+			}
+
+			.catalog .content_wrapper .items_list_wrapper {
+				width: 75%!important;
+			}
+		}
+
+		@media only screen and (max-width: 1300px) {
+			.catalog .content_wrapper .items_list_wrapper .list_wrapper .catalog_item {
+				width: calc(100% - 24px)!important;
+			}
+
+
+			.catalog .content_wrapper .filters_wrapper {
+				width: 90%!important;
+                                position: absolute;
+                                left: 0;
+                                top: 0;
+                                transform: translateX(-90%);
+                                box-shadow: -18px 17px 0 -24px transparent;
+                               
+
+                                &.active {
+                                        transform: translateX(0);
+                                        z-index: 1;
+                                         box-shadow: 12px 17px 76px -24px black;
+                                }
+				
+			}
+
+			.catalog .content_wrapper .items_list_wrapper {
+				width: 90%!important;
+                                transform: translateX(90%);
+                                box-shadow: -18px 17px 0 -24px transparent;
+
+                                &.active {
+                                        transform: translateX(10%);
+                                        z-index: 1;
+                                        box-shadow: -18px 17px 76px -24px black;
+                                }
+			}
+		}
+
     .catalog {
         overflow: hidden;
         width: 100%;
@@ -408,7 +459,7 @@ export default {
                 
 
                 .filters_wrapper {
-                        width: 20%;
+                        width: 25%;
                         height: 100%;
                         background: #f1f1f1;
                         border-radius: 0;
@@ -429,7 +480,7 @@ export default {
                 }
 
                 .items_list_wrapper {
-                        width: 80%;
+                        width: 75%;
                         overflow-y: auto;
                         overflow-x: hidden;
                         border-radius: 0;

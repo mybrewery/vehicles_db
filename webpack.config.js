@@ -17,7 +17,7 @@ const OUTPUT_PATH = "dist"
 const SOURCE_MAP = NODE_ENV === "development"
 
 let host = ip.address()
-let port = 8008
+let port = 8010
 
 host = "localhost"
 

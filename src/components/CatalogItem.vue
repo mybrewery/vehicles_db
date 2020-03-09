@@ -71,7 +71,9 @@ export default {
 </script>
 
 <style lang="scss">
-    .catalog_item {
+        
+
+.catalog_item {
         border: 2px solid gainsboro;
         padding: 12px;
         margin: 12px;
