@@ -288,7 +288,7 @@ export default {
                         max_page: 1,
                         filters: {
                                 year: [1990, 2020],
-                                mileage: [0, 500000],
+                                mileage: [0, 800000],
                                 engine_capacity: [0, 8],
                                 price: [0, 3000000],
                                 vendor: null,
@@ -297,7 +297,7 @@ export default {
                         },
                         models: {
                                 year: [1990, 2020],
-                                mileage: [0, 500000],
+                                mileage: [0, 800000],
                                 engine_capacity: [0, 8],
                                 price: [0, 3000000],
                                 vendors: [],
