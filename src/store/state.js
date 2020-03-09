@@ -7,7 +7,8 @@ var state = {
         logged_in_user: {
                 login: null,
                 password: null
-        }
+        },
+        show_login_screen: true
 };
 
 export default state;

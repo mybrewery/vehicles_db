@@ -221,6 +221,7 @@ for (var k in unp){
 }
 
 let vendors = {}
+let gearboxes = {}
 let models = {}
 let result = {
         total_count: 0,
@@ -246,6 +247,9 @@ data.vehicles.forEach( ( data )=>{
                 vendors[data.vendor.toLowerCase()] = vendors[data.vendor.toLowerCase()] || 0
                 vendors[data.vendor.toLowerCase()]++
 
+                gearboxes[data.gearbox_type.toLowerCase()] = gearboxes[data.gearbox_type.toLowerCase()] || 0
+                gearboxes[data.gearbox_type.toLowerCase()]++
+
                 models[data.vendor.toLowerCase()] = models[data.vendor.toLowerCase()] || {}
                 models[data.vendor.toLowerCase()][data.model_name.toLowerCase()] = models[data.vendor.toLowerCase()][data.model_name.toLowerCase()] || 0
                 models[data.vendor.toLowerCase()][data.model_name.toLowerCase()]++
@@ -253,8 +257,11 @@ data.vehicles.forEach( ( data )=>{
                 result.vehicles.push( data )
         }
 
-        result.vendors = vendors
-        result.models = models
+        
 } )
 
-jsonfile.writeFileSync("res/data_p2.json", result, { spaces: 4 })
+result.vendors = vendors
+result.models = models
+result.gearboxes = gearboxes
+
+jsonfile.writeFileSync("res/data_p2.json", result, { spaces: 4 } )

@@ -79,6 +79,8 @@ export default {
                                         login: this.entered_login,
                                         password: this.entered_password
                                 })
+
+                                this.$store.commit("show_login_screen", false)
                         }
 
                 }
@@ -90,12 +92,11 @@ export default {
 
 <style lang="scss">
     .login_screen {
-        position: absolute;
         z-index: 2;
         top: 0;
         left: 0;
         width: 100%;
-        height: 100%;
+        height: calc(100% - 32px);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -114,6 +115,8 @@ export default {
                 }
 
                 & > .caption {
+                        font-weight: 700;
+                        font-size: 24px;
                         text-decoration: underline;
                         margin-bottom: 24px;
                 }

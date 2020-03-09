@@ -5,6 +5,11 @@ import _ from "./Helpers"
 import Vue from "vue"
 import StoreCreator from "store/StoreCreator"
 import packageObj from "../package.json"
+import Vuetify from 'vuetify'
+import 'vuetify/dist/vuetify.min.css'
+
+Vue.use(Vuetify)
+
 window.clog = console.log.bind(console)
 
 class VehiclesDB {
@@ -20,6 +25,7 @@ class VehiclesDB {
 
 
 		new Vue({
+			vuetify: new Vuetify(),
 			el:  this.dom,
 			render: createElement => {
 					const context = {

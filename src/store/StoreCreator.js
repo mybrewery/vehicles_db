@@ -23,8 +23,6 @@ class StoreCreator {
 			plugins: [createPersistedState()]
 		});
 		
-		this.store.state.res.root_path = window.RES_PATH
-
 		if ( window.NODE_ENV === "development" ) {
 			window.store = this.store;
 		}

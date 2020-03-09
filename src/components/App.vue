@@ -1,9 +1,17 @@
 <template>
-    <div class="vehicles_db"> 
+    <v-app class="vehicles_db"> 
         <LoginScreen
-    
+            v-if="$store.state.show_login_screen"
         />
-    </div>
+        <Catalog
+            v-if="!$store.state.show_login_screen"
+        />
+        <div class="footer flex-row">
+            <span>Додаток створено в рамках практичної і курсової роботи студентом Панасенко Н. В.</span> 
+            <span class="year">2020 р.</span>
+            <a href="https://github.com/mybrewery/vehicles_db">GitHub</a>
+        </div>
+    </v-app>
 </template>
 
 <script>
@@ -13,11 +21,12 @@
 
 import { mapState } from 'vuex'
 import LoginScreen from "./LoginScreen.vue"
+import Catalog from "./Catalog.vue"
 
 
 export default {
     mixins: [ ],
-    components: { LoginScreen },
+    components: { LoginScreen, Catalog },
     name: "App",
     log_color: "#ffffff",
     mounted () {
@@ -81,7 +90,7 @@ export default {
         outline: none;
         position: relative;
         box-sizing: border-box;
-        border-radius: 6px;
+        border-radius: 0;
     }
 
     .button {
@@ -97,12 +106,16 @@ export default {
 
         &:hover {
             background-color: #43535a;
+            color: #fff;
         }
 
         &.transparent {
             background-color: transparent;
+            color: #111;
+
             &:hover {
                 background-color: transparent;
+                color: #444;
             }
         }
     }
@@ -150,6 +163,34 @@ export default {
     .vehicles_db {
         width: 100%;
         height: 100%;
+
+        .footer {
+            height: 32px;
+            width: 100%;
+            justify-content: center;
+            align-items: center;
+            background-color: #7c608b;
+            font-size: 12px;
+            color: #eee;
+            border-radius: 0;
+
+            span {
+                margin: 0 4px;
+            }
+
+            span.year {
+                color: yellow;
+            }
+
+            span.email {
+                color: red;
+            }
+
+            a {
+                color: #ddffff;
+            }
+
+        }
     }
 
 </style>
